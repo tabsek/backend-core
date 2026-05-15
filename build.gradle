@@ -1,6 +1,7 @@
 plugins {
     id 'java'
     id 'jacoco'
+    id 'checkstyle'
 }
 
 group = 'ru.mentee.power'
@@ -22,6 +23,13 @@ dependencies {
     testRuntimeOnly "org.junit.platform:junit-platform-launcher"
     compileOnly "org.projectlombok:lombok:${lombokVersion}"
     annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
+}
+
+checkstyle {
+    toolVersion = '10.12.4'
+    maxErrors = 0
+    maxWarnings = 999
+    configFile = file("${rootDir}/config/checkstyle/checkstyle.xml")
 }
 
 test {
