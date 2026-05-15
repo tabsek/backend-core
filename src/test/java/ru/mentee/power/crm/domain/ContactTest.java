@@ -6,7 +6,7 @@ import static org.assertj.core.api.Assertions.*;
 class ContactTest {
 
     @Test
-    void shouldCreateContact_whenValidData() {
+    void shouldCreateContactWhenValidData() {
         var contact = new Contact("John", "Doe", "john@example.com");
         assertThat(contact.firstName()).isEqualTo("John");
         assertThat(contact.lastName()).isEqualTo("Doe");
@@ -14,15 +14,16 @@ class ContactTest {
     }
 
     @Test
-    void shouldBeEqual_whenSameData() {
+    void shouldBeEqualWhenSameData() {
         var c1 = new Contact("John", "Doe", "john@example.com");
         var c2 = new Contact("John", "Doe", "john@example.com");
-        assertThat(c1).isEqualTo(c2);
-        assertThat(c1.hashCode()).isEqualTo(c2.hashCode());
+        assertThat(c1)
+                .isEqualTo(c2)
+                .hasSameHashCodeAs(c2);
     }
 
     @Test
-    void shouldNotBeEqual_whenDifferentData() {
+    void shouldNotBeEqualWhenDifferentData() {
         var c1 = new Contact("John", "Doe", "john@example.com");
         var c2 = new Contact("Jane", "Doe", "jane@example.com");
         assertThat(c1).isNotEqualTo(c2);

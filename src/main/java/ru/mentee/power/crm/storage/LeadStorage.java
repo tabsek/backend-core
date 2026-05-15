@@ -24,12 +24,16 @@ public class LeadStorage {
     public Lead[] findAll() {
         int count = 0;
         for (int i = 0; i < leads.length; i++) {
-            if (leads[i] != null) count++;
+            if (leads[i] != null) {
+                count++;
+            }
         }
         Lead[] result = new Lead[count];
         int j = 0;
         for (int i = 0; i < leads.length; i++) {
-            if (leads[i] != null) result[j++] = leads[i];
+            if (leads[i] != null) {
+                result[j++] = leads[i];
+            }
         }
         return result;
     }
@@ -37,7 +41,9 @@ public class LeadStorage {
     public int size() {
         int count = 0;
         for (int i = 0; i < leads.length; i++) {
-            if (leads[i] != null) count++;
+            if (leads[i] != null) {
+                count++;
+            }
         }
         return count;
     }
