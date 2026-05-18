@@ -10,7 +10,7 @@ version = '1.0-SNAPSHOT'
 ext {
     junitVersion = '5.11.0'
     assertjVersion = '3.27.7'
-    lombokVersion = '1.18.36'
+    lombokVersion = '1.18.40'
 }
 
 repositories {
