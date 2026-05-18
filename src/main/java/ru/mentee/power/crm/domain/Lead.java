@@ -1,68 +1,21 @@
 package ru.mentee.power.crm.domain;
 
-import java.util.Objects;
+import java.util.Set;
 import java.util.UUID;
 
-public class Lead {
+public record Lead(UUID id, Contact contact, String company, String status) {
 
-    private UUID id;
-    private String email;
-    private String phone;
-    private String company;
-    private String status;
+    private static final Set<String> ALLOWED_STATUSES = Set.of("NEW", "IN_PROGRESS", "CLOSED");
 
-    public Lead(UUID id,
-                String email,
-                String phone,
-                String company,
-                String status) {
-        this.id = id;
-        this.email = email;
-        this.phone = phone;
-        this.company = company;
-        this.status = status;
-    }
-
-    public UUID getId() {
-        return id;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public String getCompany() {
-        return company;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    @Override
-    public String toString() {
-        return "Lead{id='" + id + "', email='" + email + "', phone='" + phone +
-                "', company='" + company + "', status='" + status + "'}";
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
+    public Lead {
+        if (id == null) {
+            throw new IllegalArgumentException("Id cannot be null");
         }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
+        if (contact == null) {
+            throw new IllegalArgumentException("Contact cannot be null");
         }
-        Lead lead = (Lead) o;
-        return Objects.equals(id, lead.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(id);
+        if (status == null || !ALLOWED_STATUSES.contains(status)) {
+            throw new IllegalArgumentException("Invalid status: " + status);
+        }
     }
 }
