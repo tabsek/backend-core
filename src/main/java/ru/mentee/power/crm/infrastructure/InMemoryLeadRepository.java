@@ -1,22 +1,20 @@
 package ru.mentee.power.crm.infrastructure;
 
 import ru.mentee.power.crm.domain.Lead;
-import ru.mentee.power.crm.domain.Repository;
+import ru.mentee.power.crm.repository.LeadRepository;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-public class InMemoryLeadRepository implements Repository<Lead> {
+public class InMemoryLeadRepository implements LeadRepository {
 
     private final List<Lead> storage = new ArrayList<>();
 
     @Override
-    public void add(Lead entity) {
-        if (!storage.contains(entity)) {
-            storage.add(entity);
-        }
+    public void add(Lead lead) {
+        storage.add(lead);
     }
 
     @Override
@@ -34,5 +32,12 @@ public class InMemoryLeadRepository implements Repository<Lead> {
     @Override
     public List<Lead> findAll() {
         return new ArrayList<> (storage);
+    }
+
+    @Override
+    public Optional<Lead> findByEmail(String email) {
+        return storage.stream()
+                .filter(lead -> lead.contact().email().equals(email))
+                .findFirst();
     }
 }
