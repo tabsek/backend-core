@@ -23,6 +23,8 @@ dependencies {
     testRuntimeOnly "org.junit.platform:junit-platform-launcher"
     compileOnly "org.projectlombok:lombok:${lombokVersion}"
     annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
+    testImplementation 'org.mockito:mockito-core:5.14.2'
+    testImplementation 'org.mockito:mockito-junit-jupiter:5.14.2'
 }
 
 checkstyle {
