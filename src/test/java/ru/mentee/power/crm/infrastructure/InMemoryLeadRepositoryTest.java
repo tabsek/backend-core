@@ -47,10 +47,10 @@ class InMemoryLeadRepositoryTest {
     }
 
     @Test
-    void addDuplicateLeadKeepsSizeOne() {
+    void addDuplicateLeadStoresBoth() {
         repository.add(lead);
         repository.add(lead);
-        assertThat(repository.findAll()).hasSize(1);
+        assertThat(repository.findAll()).hasSize(2);
     }
 
     @Test
