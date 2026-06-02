@@ -2,6 +2,7 @@ plugins {
     id 'java'
     id 'jacoco'
     id 'checkstyle'
+    id 'application'
 }
 
 group = 'ru.mentee.power'
@@ -42,4 +43,8 @@ jacocoTestReport {
     reports {
         html.required = true
     }
+}
+
+application {
+    mainClass = 'ru.mentee.power.crm.Main'
 }
