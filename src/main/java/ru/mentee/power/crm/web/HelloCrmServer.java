@@ -53,7 +53,7 @@ public class HelloCrmServer {
             byte[] responseByte = html.getBytes(StandardCharsets.UTF_8);
             exchange.getResponseHeaders().set("Content-Type", "text/html; charset=UTF-8");
             exchange.sendResponseHeaders(200, responseByte.length);
-            try(OutputStream os = exchange.getResponseBody()){
+            try (OutputStream os = exchange.getResponseBody()) {
                 os.write(responseByte);
             }
         }
