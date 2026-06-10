@@ -48,6 +48,8 @@ class LeadListServletTest {
         doReturn(servletContext).when(servlet).getServletContext();
         when(servletContext.getAttribute("leadService")).thenReturn(leadService);
 
+        servlet.init();
+
         stringWriter = new StringWriter();
         PrintWriter printWriter = new PrintWriter(stringWriter);
         when(response.getWriter()).thenReturn(printWriter);
@@ -89,9 +91,10 @@ class LeadListServletTest {
         servlet.doGet(request, response);
 
         String html = stringWriter.toString();
-        assertThat(html).contains("ivan@gmail.com");
-        assertThat(html).contains("StartupX");
-        assertThat(html).contains("IN_PROGRESS");
+        assertThat(html)
+                .contains("ivan@gmail.com")
+                .contains("StartupX")
+                .contains("IN_PROGRESS");
     }
 
     @Test
@@ -105,8 +108,9 @@ class LeadListServletTest {
         servlet.doGet(request, response);
 
         String html = stringWriter.toString();
-        assertThat(html).contains("anna@gmail.com");
-        assertThat(html).contains("petr@gmail.com");
+        assertThat(html)
+                .contains("anna@gmail.com")
+                .contains("petr@gmail.com");
     }
 
     @Test
@@ -116,8 +120,8 @@ class LeadListServletTest {
         servlet.doGet(request, response);
 
         String html = stringWriter.toString();
-        assertThat(html).contains("<table");
-        assertThat(html).contains("</table>");
+        assertThat(html).contains("<table")
+                .contains("</table>");
     }
 
     @Test
@@ -127,9 +131,9 @@ class LeadListServletTest {
         servlet.doGet(request, response);
 
         String html = stringWriter.toString();
-        assertThat(html).contains("Email");
-        assertThat(html).contains("Company");
-        assertThat(html).contains("Status");
+        assertThat(html).contains("Email")
+                .contains("Company")
+                .contains("Status");
     }
 
     private Lead buildLead(String email, String company, String status) {
