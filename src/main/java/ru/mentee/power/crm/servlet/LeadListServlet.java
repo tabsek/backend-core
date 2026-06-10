@@ -1,5 +1,9 @@
 package ru.mentee.power.crm.servlet;
 
+import gg.jte.ContentType;
+import gg.jte.TemplateEngine;
+import gg.jte.output.WriterOutput;
+import gg.jte.resolve.DirectoryCodeResolver;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -9,11 +13,22 @@ import ru.mentee.power.crm.domain.Lead;
 import ru.mentee.power.crm.service.LeadService;
 
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.nio.file.Path;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @WebServlet("/leads")
 public class LeadListServlet extends HttpServlet {
+
+    private TemplateEngine templateEngine;
+
+    @Override
+    public void init() throws ServletException {
+        Path templatePath = Path.of("src/main/jte");
+        DirectoryCodeResolver codeResolver = new DirectoryCodeResolver(templatePath);
+        this.templateEngine = TemplateEngine.create(codeResolver, ContentType.Html);
+    }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -21,26 +36,10 @@ public class LeadListServlet extends HttpServlet {
         var servletContext = getServletContext();
         LeadService leadService = (LeadService) servletContext.getAttribute("leadService");
         List<Lead> leads = leadService.findAll();
+
+        Map<String, Object> model = new HashMap<>();
+        model.put("leads", leads);
         response.setContentType("text/html; charset=UTF-8");
-        PrintWriter printWriter = response.getWriter();
-
-        printWriter.println("<!DOCTYPE html>");
-        printWriter.println("<html><head><title>CRM Leads</title></head><body>");
-        printWriter.println("<h1>Lead List</h1>");
-        printWriter.println("<table border='1'><thead><tr>" +
-                "<th>Email</th>" +
-                "<th>Company</th>" +
-                "<th>Status</th>" +
-                "</tr></thead><tbody>");
-        for (Lead lead : leads) {
-            printWriter.println(String.format("<tr><td>%s</td><td>%s</td><td>%s</td></tr>",
-                    lead.contact().email(), lead.company(), lead.status()));
-        }
-
-        printWriter.println("</tbody>");
-        printWriter.println("</table>");
-        printWriter.println("</body>");
-        printWriter.println("</html>");
+        templateEngine.render("leads/list.jte", model, new WriterOutput(response.getWriter()));
     }
-
 }
