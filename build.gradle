@@ -54,6 +54,7 @@ checkstyle {
 
 test {
     useJUnitPlatform()
+    jvmArgs '-Dnet.bytebuddy.experimental=true'
 }
 
 jacocoTestReport {
