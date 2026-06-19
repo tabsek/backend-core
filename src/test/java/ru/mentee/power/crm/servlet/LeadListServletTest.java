@@ -11,6 +11,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import ru.mentee.power.crm.domain.Address;
 import ru.mentee.power.crm.domain.Contact;
 import ru.mentee.power.crm.domain.Lead;
+import ru.mentee.power.crm.domain.LeadStatus;
 import ru.mentee.power.crm.service.LeadService;
 
 import java.io.PrintWriter;
@@ -75,7 +76,7 @@ class LeadListServletTest {
 
     @Test
     void shouldRenderLeadEmailInTable() throws Exception {
-        Lead lead = buildLead("test@gmail.com", "TechCorp", "NEW");
+        Lead lead = buildLead("test@gmail.com", "TechCorp", LeadStatus.NEW);
         when(leadService.findAll()).thenReturn(List.of(lead));
 
         servlet.doGet(request, response);
@@ -85,7 +86,7 @@ class LeadListServletTest {
 
     @Test
     void shouldRenderAllLeadFieldsInTable() throws Exception {
-        Lead lead = buildLead("ivan@gmail.com", "StartupX", "IN_PROGRESS");
+        Lead lead = buildLead("ivan@gmail.com", "StartupX", LeadStatus.IN_PROGRESS);
         when(leadService.findAll()).thenReturn(List.of(lead));
 
         servlet.doGet(request, response);
@@ -100,8 +101,8 @@ class LeadListServletTest {
     @Test
     void shouldRenderAllLeadsWhenMultipleExist() throws Exception {
         List<Lead> leads = List.of(
-                buildLead("anna@gmail.com", "Corp A", "NEW"),
-                buildLead("petr@gmail.com", "Corp B", "CLOSED")
+                buildLead("anna@gmail.com", "Corp A", LeadStatus.NEW),
+                buildLead("petr@gmail.com", "Corp B", LeadStatus.CLOSED)
         );
         when(leadService.findAll()).thenReturn(leads);
 
@@ -136,7 +137,7 @@ class LeadListServletTest {
                 .contains("Status");
     }
 
-    private Lead buildLead(String email, String company, String status) {
+    private Lead buildLead(String email, String company, LeadStatus status) {
         Address address = new Address("Москва", "Ленина", "101000");
         Contact contact = new Contact(email, "+79001112233", address);
         return new Lead(UUID.randomUUID(), contact, company, status);

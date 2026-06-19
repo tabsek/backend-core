@@ -1,11 +1,8 @@
 package ru.mentee.power.crm.domain;
 
-import java.util.Set;
 import java.util.UUID;
 
-public record Lead(UUID id, Contact contact, String company, String status) {
-
-    private static final Set<String> ALLOWED_STATUSES = Set.of("NEW", "IN_PROGRESS", "CLOSED");
+public record Lead(UUID id, Contact contact, String company, LeadStatus status) {
 
     public Lead {
         if (id == null) {
@@ -14,7 +11,7 @@ public record Lead(UUID id, Contact contact, String company, String status) {
         if (contact == null) {
             throw new IllegalArgumentException("Contact cannot be null");
         }
-        if (status == null || !ALLOWED_STATUSES.contains(status)) {
+        if (status == null) {
             throw new IllegalArgumentException("Invalid status: " + status);
         }
     }

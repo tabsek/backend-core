@@ -5,6 +5,7 @@ import org.apache.catalina.startup.Tomcat;
 import ru.mentee.power.crm.domain.Address;
 import ru.mentee.power.crm.domain.Contact;
 import ru.mentee.power.crm.domain.Lead;
+import ru.mentee.power.crm.domain.LeadStatus;
 import ru.mentee.power.crm.infrastructure.InMemoryLeadRepository;
 import ru.mentee.power.crm.service.LeadService;
 import ru.mentee.power.crm.servlet.LeadListServlet;
@@ -21,19 +22,19 @@ public class Main {
 
         leadService.addLead(new Lead(UUID.randomUUID(),
                 new Contact("ivan@gmail.com", "+79001112233", address),
-                "TechCorp", "NEW"));
+                "TechCorp", LeadStatus.NEW));
         leadService.addLead(new Lead(UUID.randomUUID(),
                 new Contact("anna@gmail.com", "+79002223344", address),
-                "StartupX", "IN_PROGRESS"));
+                "StartupX", LeadStatus.IN_PROGRESS));
         leadService.addLead(new Lead(UUID.randomUUID(),
                 new Contact("petr@gmail.com", "+79003334455", address),
-                "BigData LLC", "NEW"));
+                "BigData LLC", LeadStatus.NEW));
         leadService.addLead(new Lead(UUID.randomUUID(),
                 new Contact("olga@gmail.com", "+79004445566", address),
-                "DevStudio", "CLOSED"));
+                "DevStudio", LeadStatus.CLOSED));
         leadService.addLead(new Lead(UUID.randomUUID(),
                 new Contact("sergey@gmail.com", "+79005556677", address),
-                "CloudSoft", "NEW"));
+                "CloudSoft", LeadStatus.NEW));
 
         Tomcat tomcat = new Tomcat();
         tomcat.setPort(8080);
