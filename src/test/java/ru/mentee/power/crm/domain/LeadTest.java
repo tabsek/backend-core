@@ -24,31 +24,31 @@ class LeadTest {
     @Test
     void shouldCreateLeadWhenValidData() {
         UUID id = UUID.randomUUID();
-        Lead lead = new Lead(id, contact, "TestCorp", "NEW");
+        Lead lead = new Lead(id, contact, "TestCorp", LeadStatus.NEW);
 
         assertThat(lead.id()).isEqualTo(id);
         assertThat(lead.contact()).isEqualTo(contact);
         assertThat(lead.company()).isEqualTo("TestCorp");
-        assertThat(lead.status()).isEqualTo("NEW");
+        assertThat(lead.status()).isEqualTo(LeadStatus.NEW);
     }
 
     @Test
     void shouldAccessEmailThroughDelegationWhenLeadCreated() {
-        Lead lead = new Lead(UUID.randomUUID(), contact, "TestCorp", "NEW");
+        Lead lead = new Lead(UUID.randomUUID(), contact, "TestCorp", LeadStatus.NEW);
 
         assertThat(lead.contact().email()).isEqualTo("test@example.com");
     }
 
     @Test
     void shouldAccessPhoneThroughDelegationWhenLeadCreated() {
-        Lead lead = new Lead(UUID.randomUUID(), contact, "TestCorp", "NEW");
+        Lead lead = new Lead(UUID.randomUUID(), contact, "TestCorp", LeadStatus.NEW);
 
         assertThat(lead.contact().phone()).isEqualTo("+71234567890");
     }
 
     @Test
     void shouldDemonstrateThreeLevelCompositionWhenAccessingCity() {
-        Lead lead = new Lead(UUID.randomUUID(), contact, "TestCorp", "NEW");
+        Lead lead = new Lead(UUID.randomUUID(), contact, "TestCorp", LeadStatus.NEW);
 
         Contact c = lead.contact();
         Address a = c.address();
@@ -60,7 +60,7 @@ class LeadTest {
 
     @Test
     void shouldBeReflexiveWhenEqualsCalledOnSameObject() {
-        Lead lead = new Lead(UUID.randomUUID(), contact, "TestCorp", "NEW");
+        Lead lead = new Lead(UUID.randomUUID(), contact, "TestCorp", LeadStatus.NEW);
 
         assertThat(lead).isEqualTo(lead);
     }
@@ -68,8 +68,8 @@ class LeadTest {
     @Test
     void shouldBeSymmetricWhenEqualsCalledOnTwoEqualObjects() {
         UUID id = UUID.randomUUID();
-        Lead firstLead = new Lead(id, contact, "TestCorp", "NEW");
-        Lead secondLead = new Lead(id, contact, "TestCorp", "NEW");
+        Lead firstLead = new Lead(id, contact, "TestCorp", LeadStatus.NEW);
+        Lead secondLead = new Lead(id, contact, "TestCorp", LeadStatus.NEW);
 
         assertThat(firstLead).isEqualTo(secondLead);
         assertThat(secondLead).isEqualTo(firstLead);
@@ -78,9 +78,9 @@ class LeadTest {
     @Test
     void shouldBeTransitiveWhenEqualsChainOfThreeObjects() {
         UUID id = UUID.randomUUID();
-        Lead firstLead = new Lead(id, contact, "TestCorp", "NEW");
-        Lead secondLead = new Lead(id, contact, "TestCorp", "NEW");
-        Lead thirdLead = new Lead(id, contact, "TestCorp", "NEW");
+        Lead firstLead = new Lead(id, contact, "TestCorp", LeadStatus.NEW);
+        Lead secondLead = new Lead(id, contact, "TestCorp", LeadStatus.NEW);
+        Lead thirdLead = new Lead(id, contact, "TestCorp", LeadStatus.NEW);
 
         assertThat(firstLead).isEqualTo(secondLead);
         assertThat(secondLead).isEqualTo(thirdLead);
@@ -89,7 +89,7 @@ class LeadTest {
 
     @Test
     void shouldReturnFalseWhenEqualsComparedWithNull() {
-        Lead lead = new Lead(UUID.randomUUID(), contact, "TestCorp", "NEW");
+        Lead lead = new Lead(UUID.randomUUID(), contact, "TestCorp", LeadStatus.NEW);
 
         assertThat(lead).isNotEqualTo(null);
     }
@@ -97,8 +97,8 @@ class LeadTest {
     @Test
     void shouldHaveSameHashCodeWhenObjectsAreEqual() {
         UUID id = UUID.randomUUID();
-        Lead firstLead = new Lead(id, contact, "TestCorp", "NEW");
-        Lead secondLead = new Lead(id, contact, "TestCorp", "NEW");
+        Lead firstLead = new Lead(id, contact, "TestCorp", LeadStatus.NEW);
+        Lead secondLead = new Lead(id, contact, "TestCorp", LeadStatus.NEW);
 
         assertThat(firstLead)
                 .isEqualTo(secondLead)
@@ -108,8 +108,8 @@ class LeadTest {
     @Test
     void shouldWorkInHashMapWhenLeadUsedAsKey() {
         UUID id = UUID.randomUUID();
-        Lead keyLead = new Lead(id, contact, "TestCorp", "NEW");
-        Lead lookupLead = new Lead(id, contact, "TestCorp", "NEW");
+        Lead keyLead = new Lead(id, contact, "TestCorp", LeadStatus.NEW);
+        Lead lookupLead = new Lead(id, contact, "TestCorp", LeadStatus.NEW);
 
         Map<Lead, String> map = new HashMap<>();
         map.put(keyLead, "CONTACTED");
@@ -119,8 +119,8 @@ class LeadTest {
 
     @Test
     void shouldNotBeEqualWhenIdsAreDifferent() {
-        Lead firstLead = new Lead(UUID.randomUUID(), contact, "TestCorp", "NEW");
-        Lead differentLead = new Lead(UUID.randomUUID(), contact, "TestCorp", "NEW");
+        Lead firstLead = new Lead(UUID.randomUUID(), contact, "TestCorp", LeadStatus.NEW);
+        Lead differentLead = new Lead(UUID.randomUUID(), contact, "TestCorp", LeadStatus.NEW);
 
         assertThat(firstLead).isNotEqualTo(differentLead);
     }
@@ -129,28 +129,20 @@ class LeadTest {
     void shouldThrowExceptionWhenContactIsNull() {
         UUID id = UUID.randomUUID();
 
-        assertThatThrownBy(() -> new Lead(id, null, "TestCorp", "NEW"))
+        assertThatThrownBy(() -> new Lead(id, null, "TestCorp", LeadStatus.NEW))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
     void shouldThrowExceptionWhenIdIsNull() {
-        assertThatThrownBy(() -> new Lead(null, contact, "TestCorp", "NEW"))
-                .isInstanceOf(IllegalArgumentException.class);
-    }
-
-    @Test
-    void shouldThrowExceptionWhenStatusIsInvalid() {
-        UUID id = UUID.randomUUID();
-
-        assertThatThrownBy(() -> new Lead(id, contact, "TestCorp", "UNKNOWN"))
+        assertThatThrownBy(() -> new Lead(null, contact, "TestCorp", LeadStatus.NEW))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
     void shouldContainAllDataWhenToStringCalled() {
         UUID id = UUID.randomUUID();
-        Lead lead = new Lead(id, contact, "TestCorp", "NEW");
+        Lead lead = new Lead(id, contact, "TestCorp", LeadStatus.NEW);
 
         assertThat(lead.toString())
                 .contains(id.toString(), "TestCorp", "NEW");

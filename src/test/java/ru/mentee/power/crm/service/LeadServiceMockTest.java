@@ -8,6 +8,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import ru.mentee.power.crm.domain.Address;
 import ru.mentee.power.crm.domain.Contact;
 import ru.mentee.power.crm.domain.Lead;
+import ru.mentee.power.crm.domain.LeadStatus;
 import ru.mentee.power.crm.repository.LeadRepository;
 
 import java.util.Optional;
@@ -33,7 +34,7 @@ class LeadServiceMockTest {
 
         Address address = new Address("Москва", "Ленина 1", "101000");
         Contact contact = new Contact("new@example.com", "+79001234567", address);
-        testLead = new Lead(UUID.randomUUID(), contact, "Company", "NEW");
+        testLead = new Lead(UUID.randomUUID(), contact, "Company", LeadStatus.NEW);
     }
 
     @Test

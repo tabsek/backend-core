@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import ru.mentee.power.crm.domain.Contact;
 import ru.mentee.power.crm.domain.Address;
 import ru.mentee.power.crm.domain.Lead;
+import ru.mentee.power.crm.domain.LeadStatus;
 
 import java.util.List;
 import java.util.Optional;
@@ -24,7 +25,7 @@ class InMemoryLeadRepositoryTest {
         leadId = UUID.randomUUID();
         Contact contact = new Contact("john@example.com", "+1234567890",
                 new Address("NY", "5th Ave", "10001"));
-        lead = new Lead(leadId, contact, "Acme Corp", "NEW");
+        lead = new Lead(leadId, contact, "Acme Corp", LeadStatus.NEW);
     }
 
     @Test

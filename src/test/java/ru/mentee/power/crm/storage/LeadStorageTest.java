@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import ru.mentee.power.crm.domain.Address;
 import ru.mentee.power.crm.domain.Contact;
 import ru.mentee.power.crm.domain.Lead;
+import ru.mentee.power.crm.domain.LeadStatus;
 
 import java.util.UUID;
 
@@ -22,7 +23,7 @@ class LeadStorageTest {
 
     private Lead createLead(String email, String phone, String company) {
         Contact contact = new Contact(email, phone, address);
-        return new Lead(UUID.randomUUID(), contact, company, "NEW");
+        return new Lead(UUID.randomUUID(), contact, company, LeadStatus.NEW);
     }
 
     @Test
