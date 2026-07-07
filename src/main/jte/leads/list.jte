@@ -1,8 +1,32 @@
 @param java.util.List<ru.mentee.power.crm.domain.Lead> leads
+@param ru.mentee.power.crm.domain.LeadStatus currentFilter
 
 @template.layout.main(content = @`
     <div class="bg-white rounded-lg shadow-md p-6">
         <h2 class="text-2xl font-bold mb-4">Lead List</h2>
+
+        <div class="mb-4 flex gap-2">
+            <a href="/leads"
+               class="px-4 py-2 rounded ${currentFilter == null ? "bg-blue-500 text-white" : "bg-gray-200"}">
+                Все
+            </a>
+            <a href="/leads?status=NEW"
+               class="px-4 py-2 rounded ${currentFilter == ru.mentee.power.crm.domain.LeadStatus.NEW ? "bg-blue-500 text-white" : "bg-gray-200"}">
+                NEW
+            </a>
+            <a href="/leads?status=IN_PROGRESS"
+               class="px-4 py-2 rounded ${currentFilter == ru.mentee.power.crm.domain.LeadStatus.IN_PROGRESS ? "bg-blue-500 text-white" : "bg-gray-200"}">
+                IN_PROGRESS
+            </a>
+            <a href="/leads?status=CLOSED"
+               class="px-4 py-2 rounded ${currentFilter == ru.mentee.power.crm.domain.LeadStatus.CLOSED ? "bg-blue-500 text-white" : "bg-gray-200"}">
+                CLOSED
+            </a>
+        </div>
+
+        @if(currentFilter != null)
+            <p class="text-sm text-gray-600 mb-2">Статус: ${currentFilter}</p>
+        @endif
 
         <table class="min-w-full bg-white border border-gray-200">
             <thead class="bg-gray-100">

@@ -2,17 +2,18 @@ package ru.mentee.power.crm.spring.service;
 
 import org.springframework.stereotype.Service;
 import ru.mentee.power.crm.domain.Lead;
+import ru.mentee.power.crm.domain.LeadStatus;
 import ru.mentee.power.crm.repository.LeadRepository;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class LeadService {
 
     private final LeadRepository leadRepository;
-
 
     public LeadService(LeadRepository leadRepository) {
         this.leadRepository = leadRepository;
@@ -35,5 +36,11 @@ public class LeadService {
 
     public Optional<Lead> findByEmail(String email) {
         return leadRepository.findByEmail(email);
+    }
+
+    public List<Lead> findByStatus(LeadStatus status) {
+        return leadRepository.findAll().stream()
+                .filter(lead -> lead.status().equals(status))
+                .collect(Collectors.toList());
     }
 }
