@@ -3,7 +3,13 @@
 
 @template.layout.main(content = @`
     <div class="bg-white rounded-lg shadow-md p-6">
-        <h2 class="text-2xl font-bold mb-4">Lead List</h2>
+        <div class="flex justify-between items-center mb-4">
+            <h2 class="text-2xl font-bold">Lead List</h2>
+            <a href="/leads/new"
+               class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">
+                + Добавить лида
+            </a>
+        </div>
 
         <div class="mb-4 flex gap-2">
             <a href="/leads"
